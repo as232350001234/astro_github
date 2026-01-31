@@ -48,12 +48,12 @@ export function HeroSection() {
           className="text-center mb-12 animate-fade-in-up"
           style={{ opacity: scrollOpacity, transform: `translateY(${(1 - scrollOpacity) * -20}px)` }}
         >
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-foreground mb-6 leading-tight">
-            <span className="italic text-gradient">The future of building</span>
+          <h1 className="gh-hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light mb-6 leading-tight">
+            <span className="gh-hero-title__line">The future of building</span>
             <br />
-            <span className="italic text-gradient">happens together</span>
+            <span className="gh-hero-title__line">happens together</span>
           </h1>
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 text-pretty leading-relaxed">
+          <p className="gh-hero-subcopy text-lg sm:text-xl max-w-2xl mx-auto mb-8 text-pretty leading-relaxed">
             Tools and trends evolve, but collaboration endures. With GitHub,
             developers, agents, and code come together on one platform.
           </p>
