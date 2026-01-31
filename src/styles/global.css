@@ -1,0 +1,608 @@
+@import "@fontsource/geist/300.css";
+@import "@fontsource/geist/400.css";
+@import "@fontsource/geist/500.css";
+@import "@fontsource/geist/600.css";
+@import "@fontsource/geist/700.css";
+@import "@fontsource/geist-mono/400.css";
+
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #0d1117;
+  --foreground: #f0f6fc;
+  --card: #161b22;
+  --card-foreground: #f0f6fc;
+  --popover: #161b22;
+  --popover-foreground: #f0f6fc;
+  --primary: #238636;
+  --primary-foreground: #ffffff;
+  --secondary: #21262d;
+  --secondary-foreground: #f0f6fc;
+  --muted: #21262d;
+  --muted-foreground: #8b949e;
+  --accent: #388bfd;
+  --accent-foreground: #ffffff;
+  --destructive: #f85149;
+  --destructive-foreground: #ffffff;
+  --border: #30363d;
+  --input: #21262d;
+  --ring: #58a6ff;
+  --chart-1: #238636;
+  --chart-2: #388bfd;
+  --chart-3: #a371f7;
+  --chart-4: #f778ba;
+  --chart-5: #f0883e;
+  --radius: 0.5rem;
+  --sidebar: #161b22;
+  --sidebar-foreground: #f0f6fc;
+  --sidebar-primary: #238636;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #21262d;
+  --sidebar-accent-foreground: #f0f6fc;
+  --sidebar-border: #30363d;
+  --sidebar-ring: #58a6ff;
+}
+
+@theme inline {
+  --font-sans: 'Geist', 'Geist Fallback';
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    /* Page background rendered by .site-bg so gradients/glows show through */
+    @apply text-foreground;
+    background: transparent;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #30363d;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #484f58;
+}
+
+/* ------------------------------------------------------------
+   Site background (GitHub-like depth)
+   - fixed aurora gradient + vignette
+   - optional grid + noise texture
+------------------------------------------------------------- */
+
+.site-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(1100px 760px at 50% 18%, rgba(168, 85, 247, 0.20), rgba(168, 85, 247, 0) 64%),
+    radial-gradient(900px 640px at 18% 32%, rgba(59, 130, 246, 0.16), rgba(59, 130, 246, 0) 62%),
+    radial-gradient(980px 720px at 86% 36%, rgba(34, 211, 238, 0.10), rgba(34, 211, 238, 0) 66%),
+    radial-gradient(1200px 720px at 50% 82%, rgba(14, 116, 144, 0.18), rgba(14, 116, 144, 0) 62%),
+    linear-gradient(180deg, rgba(13, 17, 23, 1) 0%, rgba(13, 17, 23, 1) 42%, rgba(11, 33, 66, 0.92) 70%, rgba(10, 70, 112, 0.60) 100%);
+  filter: saturate(1.05);
+}
+
+.site-bg__noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.06) 0 1px, rgba(255,255,255,0) 1px 3px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0 1px, rgba(255,255,255,0) 1px 4px);
+}
+
+.site-bg__grid {
+  position: absolute;
+  inset: -2px;
+  opacity: 0.18;
+  background-image:
+    linear-gradient(rgba(88, 166, 255, 0.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(88, 166, 255, 0.08) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(closest-side at 50% 35%, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.32) 62%, rgba(0,0,0,0) 100%);
+}
+
+.site-bg__vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(1200px 820px at 50% 20%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.32) 60%, rgba(0,0,0,0.62) 100%);
+  opacity: 0.9;
+}
+
+/* Scroll animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+}
+
+@keyframes floatReverse {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(-5deg);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.8s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.8s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.6s ease-out forwards;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: floatReverse 5s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float 8s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* Delay utilities */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+.delay-700 { animation-delay: 700ms; }
+
+/* Initial state for scroll animations */
+.scroll-animate {
+  opacity: 0;
+}
+
+.scroll-animate.visible {
+  opacity: 1;
+}
+
+/* Cursor styles */
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Glow effects */
+.glow-purple {
+  box-shadow: 0 0 60px 20px rgba(139, 92, 246, 0.15);
+}
+
+.glow-blue {
+  box-shadow: 0 0 60px 20px rgba(59, 130, 246, 0.15);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 60px 20px rgba(34, 211, 238, 0.1);
+}
+
+/* Glass effect */
+.glass {
+  background: rgba(22, 27, 34, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Text gradient */
+.text-gradient {
+  background: linear-gradient(180deg, #f0f6fc 0%, #8b949e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Syntax highlighting colors */
+.syntax-keyword { color: #ff7b72; }
+.syntax-string { color: #a5d6ff; }
+.syntax-function { color: #d2a8ff; }
+.syntax-variable { color: #79c0ff; }
+.syntax-comment { color: #8b949e; }
+.syntax-number { color: #79c0ff; }
+.syntax-property { color: #7ee787; }
+.syntax-class { color: #ffa657; }
+
+/* ------------------------------------------------------------
+   GitHub-like hero aurora + IDE glow
+   - Pure CSS glow layers with subtle drift
+   - JS (small) only adjusts --hero-progress for fade in/out
+------------------------------------------------------------- */
+
+.gh-hero {
+  --hero-progress: 0;
+}
+
+@keyframes ghHeroAuroraDrift {
+  0% { transform: translate3d(-0.8%, -0.6%, 0) scale(1.02); }
+  50% { transform: translate3d(0.9%, 0.2%, 0) scale(1.04); }
+  100% { transform: translate3d(0.1%, 0.8%, 0) scale(1.02); }
+}
+
+@keyframes ghHeroGlowPulse {
+  0%, 100% { opacity: 0.78; }
+  50% { opacity: 1; }
+}
+
+.gh-hero-bg {
+  position: absolute;
+  inset: -2px;
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  background:
+    radial-gradient(1100px 760px at 50% 62%, rgba(168, 85, 247, 0.22), rgba(168, 85, 247, 0) 64%),
+    radial-gradient(900px 700px at 18% 32%, rgba(59, 130, 246, 0.16), rgba(59, 130, 246, 0) 62%),
+    radial-gradient(950px 720px at 86% 36%, rgba(34, 211, 238, 0.12), rgba(34, 211, 238, 0) 66%),
+    radial-gradient(820px 520px at 50% 14%, rgba(99, 102, 241, 0.10), rgba(99, 102, 241, 0) 62%),
+    linear-gradient(180deg, rgba(13, 17, 23, 0.98) 0%, rgba(13, 17, 23, 1) 46%, rgba(11, 33, 66, 0.92) 72%, rgba(10, 70, 112, 0.55) 100%);
+  filter: saturate(1.06);
+  opacity: calc(1 - (0.10 * var(--hero-progress)));
+  animation: ghHeroAuroraDrift 18s ease-in-out infinite;
+}
+
+.gh-hero-bg-noise {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.06) 0 1px, rgba(255,255,255,0) 1px 3px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0 1px, rgba(255,255,255,0) 1px 4px);
+}
+
+.gh-hero-bg-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 52vh;
+  pointer-events: none;
+  opacity: calc(0.60 + (0.35 * var(--hero-progress)));
+  background:
+    radial-gradient(900px 520px at 50% 10%, rgba(168, 85, 247, 0.18), rgba(168, 85, 247, 0) 68%),
+    linear-gradient(180deg, rgba(13, 17, 23, 0) 0%, rgba(18, 64, 104, 0.40) 45%, rgba(16, 92, 132, 0.58) 100%);
+}
+
+.gh-hero-ide-shell {
+  position: relative;
+  transform: translate3d(0, calc(-18px * var(--hero-progress)), 0)
+    scale(calc(1 - (0.035 * var(--hero-progress))));
+  transform-origin: 50% 0%;
+  will-change: transform;
+}
+
+.gh-hero-ide-glow {
+  position: absolute;
+  inset: -170px -220px -190px;
+  pointer-events: none;
+  background:
+    radial-gradient(closest-side at 52% 40%, rgba(168, 85, 247, 0.58), rgba(168, 85, 247, 0) 70%),
+    radial-gradient(closest-side at 40% 62%, rgba(59, 130, 246, 0.22), rgba(59, 130, 246, 0) 74%),
+    radial-gradient(closest-side at 62% 66%, rgba(34, 211, 238, 0.14), rgba(34, 211, 238, 0) 76%);
+  filter: blur(54px);
+  transform: translateZ(0);
+  will-change: opacity;
+  opacity: calc(0.68 + (0.30 * var(--hero-progress)));
+  animation: ghHeroGlowPulse 7s ease-in-out infinite;
+}
+
+.gh-hero-ide-surface {
+  position: relative;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(22, 27, 34, 0.74) 0%, rgba(13, 17, 23, 0.88) 100%);
+  border: 1px solid rgba(240, 246, 252, 0.12);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow:
+    0 46px 140px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(168, 85, 247, 0.10),
+    0 0 120px rgba(168, 85, 247, 0.10);
+}
+
+/* Ultra-thin border sheen (GitHub-like) */
+.gh-hero-ide-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(240, 246, 252, 0.24) 0%,
+    rgba(240, 246, 252, 0.10) 36%,
+    rgba(240, 246, 252, 0.04) 70%,
+    rgba(240, 246, 252, 0.02) 100%
+  );
+  opacity: 0.85;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* Slight top highlight and outer shadow for depth */
+.gh-hero-ide-surface::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow:
+    inset 0 1px 0 rgba(240, 246, 252, 0.06),
+    0 34px 90px rgba(0, 0, 0, 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gh-hero-bg,
+  .gh-hero-ide-glow {
+    animation: none !important;
+  }
+}
+
+/* ------------------------------------------------------------
+   Customer stories hover
+   - Use plain CSS so hover works even when React islands are not hydrated.
+   - Matches GitHub-style: blurred backdrop + subtle border/elevation + CTA reveal.
+------------------------------------------------------------- */
+
+.customer-card {
+  position: relative;
+}
+
+.customer-card:hover {
+  z-index: 10;
+}
+
+.customer-card__hoverbg,
+.customer-card__hoverborder,
+.customer-card__link {
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.customer-card:hover .customer-card__hoverbg,
+.customer-card:hover .customer-card__hoverborder,
+.customer-card:hover .customer-card__link {
+  opacity: 1;
+}
+
+/* Slight lift on hover (subtle, GitHub-like) */
+.customer-card {
+  transition: transform 300ms ease;
+}
+
+.customer-card:hover {
+  transform: translateY(-1px);
+}
+
+/* ------------------------------------------------------------
+   GitHub-like security demo panel
+   - ultra-thin border
+   - purple/blue inner glow
+   - subtle particle texture (right side)
+------------------------------------------------------------- */
+
+.gh-security-panel {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(13, 17, 23, 0.72) 0%, rgba(13, 17, 23, 0.9) 100%);
+  border: 1px solid rgba(240, 246, 252, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(240, 246, 252, 0.05),
+    0 30px 80px rgba(0, 0, 0, 0.45);
+}
+
+/* Gradient border sheen (keeps the border ultra-thin but "alive") */
+.gh-security-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(180deg, rgba(240, 246, 252, 0.18) 0%, rgba(240, 246, 252, 0.06) 40%, rgba(240, 246, 252, 0.02) 100%);
+  pointer-events: none;
+  opacity: 0.75;
+  /* "hollow" the middle so it becomes a border */
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.gh-security-panel__glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.gh-security-panel__glow::before {
+  content: "";
+  position: absolute;
+  right: -120px;
+  top: -120px;
+  width: 820px;
+  height: 620px;
+  background:
+    radial-gradient(closest-side at 45% 55%, rgba(168, 85, 247, 0.55), rgba(168, 85, 247, 0) 70%),
+    radial-gradient(closest-side at 60% 60%, rgba(59, 130, 246, 0.25), rgba(59, 130, 246, 0) 72%);
+  filter: blur(10px);
+  opacity: 0.85;
+}
+
+.gh-security-panel__particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url('/assets/gh-particles.png');
+  background-repeat: no-repeat;
+  background-size: 720px auto;
+  background-position: 68% 22%;
+  opacity: 0.22;
+  mix-blend-mode: screen;
+}
+
+/* Inner content spacing alignment closer to GitHub */
+.gh-security-panel__content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Shield icon (top of section) */
+.gh-shield-icon {
+  filter: drop-shadow(0 16px 32px rgba(88, 166, 255, 0.26));
+}
